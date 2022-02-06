@@ -3,7 +3,7 @@ import Input from './Input';
 import { Context } from '../context/ContextProvider';
 
 const Register = () => {
-    const { handleRegistration, closeRegisterPage, formData, handleFormDataChange} = useContext(Context);
+    const { handleRegistration, closeRegisterPage, formData, handleFormDataChange, openAuthPage} = useContext(Context);
 
     const handleSubmit = (e) => {
         const { firstName, lastName, email, password, passwordCheck} = formData;
@@ -118,8 +118,8 @@ const Register = () => {
                             </div>
                             <div className="text-center">
                                 <a
-                                    className="inline-block text-sm text-blue-500 align-baseline hover:text-blue-800"
-                                    href="./index.html"
+                                    className="inline-block text-sm text-blue-500 align-baseline hover:text-blue-800 hover:cursor-pointer"
+                                    onClick={openAuthPage}
                                 >
                                     Already have an account? Login!
                                 </a>

@@ -6,10 +6,10 @@ import './index.css'
 
 
 ReactDOM.render(
-  <ContextProvider>
     <React.StrictMode>
-      <App />
-    </React.StrictMode>
-  </ContextProvider>,
+      <ContextProvider>
+        <App />
+      </ContextProvider>
+    </React.StrictMode>,
   document.getElementById('root')
 )

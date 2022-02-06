@@ -2,14 +2,14 @@ import React, { useContext, useState } from "react";
 import Register from "../Register";
 
 import { Context } from '../../context/ContextProvider'
+import Authentication from "../Authentication";
 
 const Header = () => {
-    const { registerPageOpen, openRegisterPage } = useContext(Context);
+    const { registerPageOpen, openRegisterPage, authPageOpen, user, logUserOut } = useContext(Context);
     return(
         <React.Fragment>
-            {registerPageOpen ?
-                <Register /> : false
-            }
+            { registerPageOpen ? <Register /> : false }
+            { authPageOpen ? <Authentication /> : false }
             <header className="bg-transparent shadow fixed w-full">
                 <nav className="container mx-auto px-6 py-3">
                     <div className="flex flex-col md:flex-row md:justify-between md:items-center">
@@ -35,12 +35,20 @@ const Header = () => {
                             <a className="my-1 text-md font-semibold text-white leading-5 hover:text-gray-200 md:mx-4 md:my-0" href="#">Staking</a>
                         </div>
 
-                        <div className="flex items-center py-2 -mx-1 md:mx-0">
+                        <div className={`flex items-center py-2 -mx-1 md:mx-0`, (user ? 'hidden' : '')}>
                             <button 
-                                className="btn-grad-primary font-medium md:mx-2 md:w-auto"
+                                className="btn-grad-primary font-semibold md:mx-2 md:w-auto"
                                 onClick={openRegisterPage}
                             >
                                 Login
+                            </button>
+                        </div>
+                        <div className={`flex items-center py-2 -mx-1 md:mx-0`, (!user ? 'hidden' : '')}>
+                            <button 
+                                className="btn-grad-danger font-semibold md:mx-2 md:w-auto"
+                                onClick={logUserOut}
+                            >
+                                Logout
                             </button>
                         </div>
                     </div>
