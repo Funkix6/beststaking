@@ -1,20 +1,24 @@
+import { stringify } from "postcss";
 import React, {useContext, useState} from "react";
 import { FaSearch } from "react-icons/fa";
 import { Context } from "../../context/ContextProvider";
 
-const Dropdown = ({hintBoxOpen, tokenList}) => {
+const Dropdown = ({hintBoxOpen}) => {
+    const {tokenList, searchInput, setSearchInput} = useContext(Context);
     return(
-        <div className={`absolute w-64 mt-2 origin-top-right rounded-md shadow-lg pt-1 ${!hintBoxOpen ? "hidden" : ""}`}>
-            <div className="px-2 py-2 bg-white rounded-md shadow dark-mode:bg-gray-800">
-                {tokenList.map((item, index) => (
-                    <a 
-                        className="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-gray-200 md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" 
-                        href="#"
-                        key={item + index}
-                    > 
-                        {item} 
-                    </a>
-                ))}
+        <div className={`absolute w-64 bg-white flex h-auto max-h-screen overflow-y-scroll mt-2 origin-top-right rounded-md shadow-lg pt-1 ${!hintBoxOpen ? "hidden" : ""}`}>
+            <div className="px-2 py-2 rounded-md w-full dark-mode:bg-gray-800">
+                {tokenList
+                    .filter((item) => String(item.name).match(new RegExp(searchInput, 'gi')))
+                    .map((item, index) => (
+                        <a  
+                            className="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg md:mt-0 hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline" 
+                            key={item + index}
+                            onFocus={() => setSearchInput(item.name)}
+                        > 
+                            {item.name}
+                        </a>))
+                }
             </div>
         </div>
     )
@@ -45,6 +49,7 @@ const Search = () => {
                 </div>
                 <div>
                     <button type="submit" className="flex items-center btn-grad-search justify-center w-12 h-12 text-white rounded-r-lg focus:bg-blue-400"
+                        onChange={(e) => handleChange(e)}
                         onClick={(e) => handleSubmit(e)}
                     >
                         <FaSearch />

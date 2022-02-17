@@ -1,7 +1,7 @@
 import React, { createContext, useState, useEffect } from "react";
 
 import { initializeApp  } from 'firebase/app';
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut} from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, reauthenticateWithRedirect} from "firebase/auth";
 import { getFirestore, doc, setDoc, serverTimestamp, getDoc } from "firebase/firestore"
 
 const firebase = initializeApp({
@@ -23,7 +23,7 @@ export const Context = createContext();
 export const ContextProvider = ({ children }) => {
     const [searchInput, setSearchInput] = useState("");
     const [tokenSearched, setTokenSearched] = useState("");
-    const [tokenList, setTokenList] = useState(["BTC", "ETH", "ONE", "ADA"]);
+    const [tokenList, setTokenList] = useState([]);
     const [registerPageOpen, setRegisterPageOpen] = useState(false);
     const [authPageOpen, setAuthPageOpen] = useState(false);
     const [user, setUser] = useState();
@@ -48,6 +48,7 @@ export const ContextProvider = ({ children }) => {
     const handleChange = (e) => {
         e.preventDefault();
         setSearchInput(e.target.value);
+        console.log(searchInput)
     }
 
     const handleSubmit = (e) => {
@@ -140,6 +141,21 @@ export const ContextProvider = ({ children }) => {
         console.log("Logged out ! Good bye :)")
     }
 
+    const getCoinList = async () => {
+        try {
+            const res = await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false');
+            const coinList = await res.json();
+            setTokenList(coinList)
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+
+    useEffect(() => {
+        getCoinList();
+    }, [])
+
     return(
         <Context.Provider value={{
             handleChange,
@@ -156,7 +172,9 @@ export const ContextProvider = ({ children }) => {
             handleFormDataChange,
             formData,
             user,
-            logUserOut
+            logUserOut,
+            setSearchInput,
+            searchInput
         }}
         >
             {children}
