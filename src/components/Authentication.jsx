@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import Input from './Input';
 import { Context } from '../context/ContextProvider';
+import { AiFillCloseSquare } from 'react-icons/ai';
 
 const Authentication = () => {
     const { formData, handleFormDataChange, handleAuth, closeAuthPage, openRegisterPage} = useContext(Context);
@@ -23,6 +24,13 @@ const Authentication = () => {
             <div className="flex justify-center px-6 my-12">
                 <div className="lg:w-1/4 md:w-1/2 w-full flex">
                     <div className="w-full bg-white p-5 rounded-lg ">
+                        <div className='w-full flex justify-end'>
+                            <button 
+                                onClick={closeAuthPage}
+                            > 
+                                <AiFillCloseSquare className='text-blue-500'/>
+                            </button>
+                        </div>
                         <h3 className="py-4 text-2xl text-center break-normal font-semibold border-b "> Connect using an existing account </h3>
                         <form className="px-8 pt-8 pb-8 mb-4 bg-white rounded w-full">
                             <div className="mb-4 md:flex md:justify-between" />

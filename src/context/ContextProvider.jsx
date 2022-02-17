@@ -17,12 +17,13 @@ const firebase = initializeApp({
 const auth = getAuth();
 const db = getFirestore();
 
+
 export const Context = createContext();
 
 export const ContextProvider = ({ children }) => {
     const [searchInput, setSearchInput] = useState("");
     const [tokenSearched, setTokenSearched] = useState("");
-    const [tokenList, setTokenList] = useState([]);
+    const [tokenList, setTokenList] = useState(["BTC", "ETH", "ONE", "ADA"]);
     const [registerPageOpen, setRegisterPageOpen] = useState(false);
     const [authPageOpen, setAuthPageOpen] = useState(false);
     const [user, setUser] = useState();
