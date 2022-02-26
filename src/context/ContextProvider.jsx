@@ -5,7 +5,7 @@ import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, si
 import { getFirestore, doc, setDoc, serverTimestamp, getDoc } from "firebase/firestore"
 
 const firebase = initializeApp({
-    apiKey: "AIzaSyDCzS5BrVPmq5dB7A06tCMc4kS14QAIWsU",
+    apiKey: "",
     authDomain: "best-staking.firebaseapp.com",
     projectId: "best-staking",
     storageBucket: "best-staking.appspot.com",
